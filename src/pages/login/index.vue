@@ -14,11 +14,11 @@
             @keyup.enter.native="submitForm"
             v-model="ruleForm.pass" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
+        <!-- <el-form-item label="确认密码" prop="checkPass">
           <el-input type="password" placeholder="请再次密码"  style="width:300px;"  
             @keyup.enter.native="submitForm"
             v-model="ruleForm.checkPass" autocomplete="off"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-button class="button" v-loading="loading" type="primary" @click="submitForm()">提交</el-button>
       </el-form>
     </div>
@@ -42,9 +42,9 @@ export default {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass');
-        }
+        // if (this.ruleForm.checkPass !== '') {
+        //   this.$refs.ruleForm.validateField('checkPass');
+        // }
         callback();
       }
     };
@@ -62,7 +62,7 @@ export default {
       ruleForm: {
         userName: '',
         pass: '',
-        checkPass: '',
+        // checkPass: '',
       },
       rules: {
         userName: [ {validator: checkName, trigger: 'blur'}],
@@ -96,7 +96,7 @@ export default {
           }
           try {
             const res = await  this.accountLogin({vm:this, data})
-            console.log('res:', res, this.userInfo.userName)
+            // console.log('res:', res, this.userInfo.userName)
           } catch (error) {
             
           }
@@ -154,7 +154,7 @@ export default {
   }
 
   .demo-ruleForm{
-    margin:30px 0;
+    margin:50px 0 0;
     padding-left: 60px;
 
     >>> .el-form-item__label{
