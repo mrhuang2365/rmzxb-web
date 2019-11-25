@@ -31,24 +31,27 @@
           <el-button type="primary" style="width:100px;" @click="initData">搜索</el-button>
         </div>
         <div class="item">
-          <el-button style="width:100px;" :disabled="data.length=== 0" @click="exportExcel">导出</el-button>
+          <el-button style="width:100px;" :disabled="data.length === 0" @click="exportExcel">导出</el-button>
         </div>
       </div>
     </div>
     <!-- 文章 -->
-    <el-table class="table" id="my-data-table"  v-if="tabName == '0'" v-loading="loading" header-row-class-name="table-header" :data="data" stripe style="width: 100%">
-      <el-table-column label="排名" type="index" width="180"></el-table-column>
-      <el-table-column label="文章标题" prop="title"> </el-table-column>
+    <el-table class="table" id="my-data-table" stripe v-if="tabName == '0'" v-loading="loading" 
+      header-row-class-name="table-header" :data="data" style="width: 100%">
+      <el-table-column label="排名" type="index" width="80"></el-table-column>
+      <el-table-column label="文章标题" prop="title" width="300"> </el-table-column>
       <el-table-column label="委员姓名" prop="senatorName"> </el-table-column>
       <el-table-column label="公众号" prop="wechatNickName"> </el-table-column>
       <el-table-column label="地域" prop="wechatProvince"> </el-table-column>
-      <el-table-column label="阅读数" prop="newsReadCount"  width="180"> </el-table-column>
-      <el-table-column label="在看数" prop="newsLikeCount" width="180"> </el-table-column>
-      <el-table-column label="发布时间" prop="publishTime"></el-table-column>
+      <el-table-column label="阅读数" prop="newsReadCount"  width="120"> </el-table-column>ssss
+      <el-table-column label="在看数" prop="newsLikeCount" width="120"> </el-table-column>
+      <el-table-column label="发布时间" prop="publishTime"  width="180"></el-table-column>
     </el-table>
     <!-- 公众号 -->
-    <el-table class="table" id="my-data-table" v-if="tabName == '1'" v-loading="loading" header-row-class-name="table-header" :data="data" stripe style="width: 100%">
-      <el-table-column label="排名" type="index" width="180"></el-table-column>
+    <el-table class="table" id="my-data-table" stripe v-if="tabName == '1'"
+     v-loading="loading" header-row-class-name="table-header" :data="data" 
+     style="width: 100%">
+      <el-table-column label="排名" type="index" width="80"></el-table-column>
       <el-table-column label="公众号" prop="wechatNickName"> </el-table-column>
       <el-table-column label="发布次数/篇数" prop=""> </el-table-column>
       <el-table-column label="阅读次数" prop="newsReadCount"> </el-table-column>
@@ -71,7 +74,7 @@
 </template>
 
 <script>
-import {exportExcel, getWorkSheet} from '@/util/util'
+import {exportExcel, getWorkSheet, exportExcelFromArrary} from '@/util/util'
 
 export default {
   data(){
@@ -167,6 +170,7 @@ export default {
     },
     exportExcel(){
       const fileName = this.tabName == '0' ? '文章排行' : '公众号排行'
+      // exportExcelFromArrary([['标题', 'url'], ['1', 'www.bai.com']], fileName)
       exportExcel([{
           sheetName: 'newsheet',
           ws: getWorkSheet("my-data-table")
@@ -191,6 +195,9 @@ export default {
 .table{
   margin-top: 25px;
 }
+// .table >>> .el-table__header{
+//   width: 100%!important;
+// }
 .table >>> .table-header th{
   background-color: #f0eded !important;
 }

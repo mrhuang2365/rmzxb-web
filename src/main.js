@@ -10,7 +10,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '../static/font/iconfont.css'
 import './router/routerCtrl'
 import moment from 'moment'
-Vue.prototype.$moment = moment;
+import 'babel-polyfill'
+
+Vue.prototype.$moment = moment
 
 Vue.use(ElementUI)
 Vue.prototype.$http = http

@@ -27,15 +27,15 @@
       <div v-if="data.length === 0" style="text-align:center;padding-top:50px;">
         暂无数据
       </div>
-      <el-card v-else @click.native="onArticleClick(item)"  class="article-items" shadow="hover" v-for="(item, index) in data" :key="index">
-        <div class="title">{{item.title}}</div>
-        <div class="desc">{{item.summary}}</div>
+      <el-card v-else class="article-items" shadow="hover" v-for="(item, index) in data" :key="index">
+        <div class="title" v-html="item.title"></div>
+        <div class="desc" @click="onArticleClick(item)" v-html="item.summary"></div>
         <div class="bottom">
-          <div class="item site">
+          <div class="item site" :title="item.site">
             <i class="iconfont el-icon-wangzhan"></i>
             采集网站：
             {{item.site}}</div>
-          <div class="item autor">
+          <div class="item autor" :title="item.author">
             <i class="el-icon-user"></i>
             作者：
             <span>{{item.author}}</span>
@@ -48,7 +48,7 @@
             采集时间：
             {{getTime(item.createDate)}}</div>
             
-          <div class="item time">
+          <div class="item time" :title="item.senatorNameStr">
             <i class="iconfont el-icon-group"></i>
             委员：
             <span class="item-content">{{item.senatorNameStr}}</span>
@@ -70,7 +70,6 @@
 </template>
 <script>
 /* eslint-disable */
-const debug = require('debug')('js:home')
 
 export default {
   name: 'home',
@@ -111,7 +110,10 @@ export default {
         if (data.startDate) data.startDate = this.$moment(data.startDate).format('YYYY-MM-DD 00:00:00')
         if (data.endDate) data.endDate = this.$moment(data.endDate).format('YYYY-MM-DD 23:59:59')
         const res = await this.$http.post('/api/page/news/getNewsByPage.json', data)
-        this.data = res.data.newsList;
+        this.data = res.data.newsList && res.data.newsList.map((item) => {
+          item.summary = item.summary.trimLeft();
+          return item
+        });
         this.pageConfig.total = res.data.totalNews;
       } catch (error) {
         console.log('error', error)
@@ -149,6 +151,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+.home-content >>> .el-form-item__label{
+  font-size:16px;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(37,38,49,1);
+}
 .search-items{
   display: flex;
   flex-wrap: wrap;
@@ -160,13 +168,16 @@ export default {
   cursor: pointer;
 
   .title{
-    font-size: 18px;
-    font-weight: 600;
+    font-size:16px;
+    font-weight:600;
+    color:rgba(37,38,49,1);
+    line-height:22px;
   }
   .desc{
-    margin-top:10px;
-    color: #474343;
-    font-size: 15px;
+    margin-top: 6px;
+    font-size:14px;
+    font-weight:400;
+    color:rgba(81,82,94,1);
   }
   .bottom{
     margin-top:10px;
@@ -182,6 +193,7 @@ export default {
 
       i{
         margin-right: 5px;
+        font-size: 12px;
       }
 
       .item-content{
@@ -191,6 +203,9 @@ export default {
         white-space: nowrap;
         text-overflow: ellipsis;
         display: block;
+        font-size:12px;
+        font-weight:400;
+        color:rgba(152,169,188,1);
       }
     }
   }

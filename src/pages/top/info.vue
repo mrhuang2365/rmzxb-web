@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="top">
-      <h1 class="title">{{article.title}}</h1>
+      <h1 class="title" v-html="article.title"></h1>
       <div class="sub">
         <div class="item site">
             <i class="iconfont el-icon-wangzhan"></i>

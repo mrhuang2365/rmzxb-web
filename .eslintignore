@@ -1,4 +1,7 @@
 /build/
 /config/
 /dist/
+dist.zip
+publish
+build.sh
 /*.js

@@ -6,12 +6,16 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import router from '../../router'
 import { getToken, removeUserInfo } from '../../util/auth'
-const debug = require('debug')('@httpApi')
 
-console.log('baseURL:', process.env.BASE_API)
+console.log('process.env:', process.env)
+let baseURL = process.env.BASE_API
+if (location.hostname === '172.20.254.225') {
+  baseURL = process.env.LOCAL_API
+}
+
 // 创建一个 axios 实例
 const service = axios.create({
-  baseURL: process.env.BASE_API,
+  baseURL: baseURL,
   timeout: 10000 // 请求超时时间
 })
 

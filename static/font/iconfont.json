@@ -20,6 +20,13 @@
       "unicode_decimal": 59111
     },
     {
+      "icon_id": "3978297",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
       "icon_id": "4974166",
       "name": "网站",
       "font_class": "wangzhan",
@@ -32,6 +39,13 @@
       "font_class": "group",
       "unicode": "ec4c",
       "unicode_decimal": 60492
+    },
+    {
+      "icon_id": "7494730",
+      "name": "人物，男士，头像",
+      "font_class": "huabanfuben",
+      "unicode": "e6a0",
+      "unicode_decimal": 59040
     }
   ]
 }
