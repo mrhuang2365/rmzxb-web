@@ -59,8 +59,9 @@ export default {
 <style lang="scss" scoped>
 .el-menu-vertical-demo{
   img{
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
   }
 }
 .el-menu-vertical-demo >>> .is-active{

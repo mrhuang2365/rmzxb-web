@@ -45,8 +45,15 @@ export default {
        * @description 注销
        */
       async function logout () {
+        const loading = vm.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
         try {
-          // await vm.$http.post('/api/user/logout.json', {})
+          await vm.$http.post('/api/user/logout.json', {})
+          loading.close()
           dispatch('user/set', null, { root: true })
           // 删除cookie
           removeToken('token')
@@ -56,6 +63,7 @@ export default {
             name: 'login'
           })
         } catch (error) {
+          loading.close()
         }
       }
       // 判断是否需要确认
