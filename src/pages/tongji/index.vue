@@ -36,28 +36,45 @@
       </div>
     </div>
     <!-- 文章 -->
-    <el-table class="table" id="my-data-table" stripe v-if="tabName == '0'" v-loading="loading" 
-      header-row-class-name="table-header" :data="data" style="width: 100%">
-      <el-table-column label="排名" type="index" width="80"></el-table-column>
-      <el-table-column label="文章标题" prop="title" width="300"> </el-table-column>
-      <el-table-column label="委员姓名" prop="senatorName"> </el-table-column>
-      <el-table-column label="公众号" prop="wechatNickName"> </el-table-column>
-      <el-table-column label="地域" prop="wechatProvince"> </el-table-column>
-      <el-table-column label="阅读数" prop="newsReadCount"  width="120"> </el-table-column>ssss
-      <el-table-column label="在看数" prop="newsLikeCount" width="120"> </el-table-column>
-      <el-table-column label="发布时间" prop="publishTime"  width="180"></el-table-column>
-    </el-table>
+    <div v-if="tabName == '0'">
+      <el-table class="table" id="my-data-table" stripe  v-loading="loading" 
+        header-row-class-name="table-header" :data="data" style="width: 100%">
+        <el-table-column label="排名" type="index" width="80"></el-table-column>
+        <el-table-column label="文章标题" prop="title" width="300">
+          <template slot-scope="scope" >
+            <div @click="goOut(scope.row)" style="cursor: pointer;">{{scope.row.title}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="委员姓名" prop="senatorName"></el-table-column>
+        <el-table-column label="公众号" prop="wechatNickName"> </el-table-column>
+        <el-table-column label="地域" prop="wechatProvince"> </el-table-column>
+        <el-table-column label="阅读数" prop="newsReadCount"  width="120"> </el-table-column>ssss
+        <el-table-column label="在看数" prop="newsLikeCount" width="120"> </el-table-column>
+        <el-table-column label="发布时间" prop="publishTime"  width="180"></el-table-column>
+      </el-table>
+    </div>
     <!-- 公众号 -->
-    <el-table class="table" id="my-data-table" stripe v-if="tabName == '1'"
-     v-loading="loading" header-row-class-name="table-header" :data="data" 
-     style="width: 100%">
-      <el-table-column label="排名" type="index" width="80"></el-table-column>
-      <el-table-column label="公众号" prop="wechatNickName"> </el-table-column>
-      <el-table-column label="发布次数/篇数" prop=""> </el-table-column>
-      <el-table-column label="阅读次数" prop="newsReadCount"> </el-table-column>
-      <el-table-column label="平均阅读" prop=""> </el-table-column>
-      <el-table-column label="在看数" prop="newsLikeCount"> </el-table-column>
-    </el-table>
+    <div v-if="tabName == '1'">
+      <el-table class="table" id="my-data-table" stripe 
+        v-loading="loading" header-row-class-name="table-header" :data="data" 
+        style="width: 100%">
+          <el-table-column label="排名" type="index" width="80"></el-table-column>
+          <el-table-column label="公众号" prop="wechatNickName">
+            <template slot-scope="scope"  align="center">
+              <div>{{scope.row.wechatNickName}}</div>
+            </template>
+          </el-table-column>
+          <el-table-column label="发布次数/篇数">
+           <template slot-scope="scope" >
+              <div>{{scope.row.newsCount}}</div>
+            </template>
+          </el-table-column>
+          <el-table-column label="阅读次数" prop="newsReadCount"> </el-table-column>
+          <el-table-column label="平均阅读" prop="averageReadCount"> </el-table-column>
+          <el-table-column label="在看数" prop="newsLikeCount"> </el-table-column>
+        </el-table>
+    </div>
+   
     <!-- 分页 -->
     <!-- <div class="bottom-page" v-if="data.length > 0">
       <el-pagination
@@ -159,7 +176,7 @@ export default {
         // }
         const res = await this.$http.post('/api/page/news/getWechatStatistics.json', data);
         this.data = res.data.map((item) => {
-          item.publishTime = this.$moment(item.createDate).format('YYYY-MM-DD HH:mm')
+          item.publishTime = this.$moment(item.createDate).format('YYYY-MM-DD HH:mm');
           return item
         })
         // this.pageConfig.total = res.count;
@@ -168,13 +185,107 @@ export default {
       }
       this.loading = false;
     },
+    onArticleExport(fileName){
+      const keys = [
+        {
+          key: 'index',
+          display: '排名',
+        },{
+          key: 'title',
+          display: '文章标题',
+        },
+        {
+          key: 'senatorName',
+          display: '委员姓名',
+        },{
+          key: 'wechatNickName',
+          display: '公众号',
+        },{
+          key: 'wechatProvince',
+          display: '地域',
+        },{
+          key: 'newsReadCount',
+          display: '阅读数',
+        },{
+          key: 'newsLikeCount',
+          display: '在看数',
+        },{
+          key: 'publishTime',
+          display: '发布时间',
+        },{
+          key: 'newsUrl',
+          display: 'url',
+        },
+      ];
+      const headerArr = [];
+      const contentArr= [];
+      keys.forEach((i) => {
+        headerArr.push(i.display)
+      })
+      contentArr[0] = headerArr;
+      this.data.forEach((item, index)=>{
+        const arr = [];
+        keys.forEach((i) => {
+          const value = i.key === 'index' ? index + 1 : item[i.key]
+          arr.push(value)
+        });
+        contentArr.push(arr);
+      })
+      exportExcelFromArrary(contentArr, fileName)
+    },
+    onWechatExport(fileName){
+      const keys = [
+        {
+          key: 'index',
+          display: '排名',
+        },{
+          key: 'wechatNickName',
+          display: '公众号',
+        },{
+          key: 'newsCount',
+          display: '发布次数/篇数',
+        },{
+          key: 'newsReadCount',
+          display: '阅读次数',
+        },{
+          key: 'averageReadCount',
+          display: '平均阅读',
+        },{
+          key: 'newsLikeCount',
+          display: '在看数',
+        }
+      ];
+      const headerArr = [];
+      const contentArr= [];
+      keys.forEach((i) => {
+        headerArr.push(i.display)
+      })
+      contentArr[0] = headerArr;
+      this.data.forEach((item, index)=>{
+        const arr = [];
+        keys.forEach((i) => {
+          const value = i.key === 'index' ? index + 1 : item[i.key]
+          arr.push(value)
+        });
+        contentArr.push(arr);
+      })
+      exportExcelFromArrary(contentArr, fileName)
+    },
     exportExcel(){
-      const fileName = this.tabName == '0' ? '文章排行' : '公众号排行'
+      const fileName = this.tabName == '0' ? '文章排行' : '公众号排行';
+      if (this.tabName == '0') {
+        this.onArticleExport(fileName)
+      } else {
+        this.onWechatExport(fileName)
+      }
       // exportExcelFromArrary([['标题', 'url'], ['1', 'www.bai.com']], fileName)
-      exportExcel([{
-          sheetName: 'newsheet',
-          ws: getWorkSheet("my-data-table")
-      }], fileName)
+      // exportExcel([{
+      //     sheetName: 'newsheet',
+      //     ws: getWorkSheet("my-data-table")
+      // }], fileName)
+    },
+    goOut(item){
+      window.open(item.newsUrl);
     }
   },
   created(){

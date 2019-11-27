@@ -4,6 +4,7 @@ export default [
     route: '/top',
     name: '头条',
     icon: 'el-icon-data-line',
+    img: '0.png',
     children: []
   },
   {
@@ -11,6 +12,7 @@ export default [
     route: '/zhengxie',
     name: '政协',
     icon: 'el-icon-data-line',
+    img: '1.png',
     children: []
   },
   {
@@ -18,6 +20,7 @@ export default [
     route: '/tongzhan',
     name: '统战',
     icon: 'el-icon-data-line',
+    img: '2.png',
     children: []
   },
   {
@@ -25,6 +28,7 @@ export default [
     route: '/redian',
     name: '热点',
     icon: 'el-icon-data-line',
+    img: '3.png',
     children: []
   },
   {
@@ -32,6 +36,7 @@ export default [
     route: '/yuanchuang',
     name: '原创',
     icon: 'el-icon-data-line',
+    img: '4.png',
     children: []
   },
   {
@@ -39,6 +44,7 @@ export default [
     route: '/shoufa',
     name: '首发',
     icon: 'el-icon-data-line',
+    img: '5.png',
     children: []
   },
   {
@@ -46,6 +52,7 @@ export default [
     route: '/wechat',
     name: '微信公众号',
     icon: 'el-icon-data-line',
+    img: '6.png',
     children: []
   },
   {
@@ -53,6 +60,7 @@ export default [
     route: '/other',
     name: '其他',
     icon: 'el-icon-data-line',
+    img: '7.png',
     children: []
   },
   {
@@ -60,6 +68,7 @@ export default [
     route: '/tongji',
     name: '统计',
     icon: 'el-icon-document',
+    img: '8.png',
     children: []
   }
 ]

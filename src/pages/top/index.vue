@@ -19,7 +19,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="initData()" style="width:120px;">搜索</el-button>
+        <el-button type="primary" @click="onSearch()" style="width:120px;">搜索</el-button>
       </el-form-item>
     </el-form>
 
@@ -28,14 +28,14 @@
         暂无数据
       </div>
       <el-card v-else class="article-items" shadow="hover" v-for="(item, index) in data" :key="index">
-        <div class="title" v-html="item.title"></div>
+        <div class="title" @click="onArticleClick(item)" v-html="item.title"></div>
         <div class="desc" @click="onArticleClick(item)" v-html="item.summary"></div>
         <div class="bottom">
-          <div class="item site" :title="item.site">
+          <div class="item site" :title="item.site" @click="onSiteSearch(item)">
             <i class="iconfont el-icon-wangzhan"></i>
             采集网站：
             {{item.site}}</div>
-          <div class="item autor" :title="item.author">
+          <div class="item autor" :title="item.author" @click="onAuthorSearch(item)">
             <i class="el-icon-user"></i>
             作者：
             <span>{{item.author}}</span>
@@ -43,12 +43,12 @@
           <!-- <div class="item autor">转发次数：
             <i class="iconfont el-icon-web-icon-"></i>
             {{item.author}}</div> -->
-          <div class="item time">
+          <div class="item time" @click="onTimeSearch(item)">
             <i class="el-icon-time"></i>
             采集时间：
             {{getTime(item.createDate)}}</div>
             
-          <div class="item time" :title="item.senatorNameStr">
+          <div class="item time" :title="item.senatorNameStr" @click="onSenatorNameSearch(item)">
             <i class="iconfont el-icon-group"></i>
             委员：
             <span class="item-content">{{item.senatorNameStr}}</span>
@@ -82,7 +82,10 @@ export default {
         startDate: '',
         endDate: '',
         senatorName: '',
+        site: '',
+        author: '',
       },
+      
       loading: false,
       data:[],
       pageConfig:{
@@ -99,6 +102,12 @@ export default {
     }
   },
   methods:{
+    onSearch(){
+      this.formInline.site = '';
+      this.formInline.author = '';
+      this.pageConfig.page = 1;
+      this.initData();
+    },
     async initData(){
       this.loading = true;
       try {
@@ -139,7 +148,29 @@ export default {
       })
     },
     initType(){
-      this.formInline.type = this.$route.meta.title || '头条';
+      this.formInline.type = this.$route.meta.sourceType
+    },
+    onSiteSearch(item){
+      this.formInline.site = item.site;
+      this.formInline.author = '';
+      this.pageConfig.page = 1;
+      this.initData();
+    },
+    onAuthorSearch(item){
+      this.formInline.author = item.author;
+      this.formInline.site = '';
+      this.pageConfig.page = 1;
+      this.initData();
+    },
+    onTimeSearch(item){
+      this.formInline.startDate = item.startDate;
+      this.pageConfig.page = 1;
+      this.initData();
+    },
+    onSenatorNameSearch(item){
+      this.formInline.senatorName = item.senatorNameStr;
+      this.pageConfig.page = 1;
+      this.initData();
     }
   },
   created() {

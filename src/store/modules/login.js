@@ -44,15 +44,19 @@ export default {
       /**
        * @description 注销
        */
-      function logout () {
-        dispatch('user/set', null, { root: true })
-        // 删除cookie
-        removeToken('token')
-        removeToken('uuid')
-        // 跳转路由
-        vm.$router.push({
-          name: 'login'
-        })
+      async function logout () {
+        try {
+          // await vm.$http.post('/api/user/logout.json', {})
+          dispatch('user/set', null, { root: true })
+          // 删除cookie
+          removeToken('token')
+          removeToken('uuid')
+          // 跳转路由
+          vm.$router.push({
+            name: 'login'
+          })
+        } catch (error) {
+        }
       }
       // 判断是否需要确认
       if (confirm) {

@@ -9,7 +9,8 @@
     @close="handleClose" 
     :collapse="isCollapse">
     <el-menu-item @click="onMenuClick(menu)" v-for="(menu, index) in menuList" :key="index" :index="menu.id">
-      <i :class="menu.icon || 'el-icon-menu'"></i>
+      <img v-if="menu.img" :src="'/static/img/icon/' + menu.img" alt="" srcset="">
+      <i v-if="!menu.img" :class="menu.icon || 'el-icon-menu'"></i>
       <span slot="title">{{menu.name}}</span>
     </el-menu-item>
   </el-menu>
@@ -56,6 +57,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-menu-vertical-demo{
+  img{
+    width: 20px;
+    height: 20px;
+  }
+}
 .el-menu-vertical-demo >>> .is-active{
   background-color: #4c5661!important;
 }

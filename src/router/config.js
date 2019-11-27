@@ -10,7 +10,8 @@ export default [
         name: 'top',
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
-          title: '头条'
+          title: '头条',
+          sourceType: '头条'
         }
       },
       {
@@ -18,7 +19,8 @@ export default [
         name: 'zhengxie',
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
-          title: '政协'
+          title: '政协',
+          sourceType: '政协'
         }
       },
       {
@@ -26,7 +28,8 @@ export default [
         name: 'tongzhan',
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
-          title: '统战'
+          title: '统战',
+          sourceType: '统战'
         }
       },
       {
@@ -34,7 +37,8 @@ export default [
         name: 'redian',
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
-          title: '热点'
+          title: '热点',
+          sourceType: '热点'
         }
       },
       {
@@ -42,7 +46,8 @@ export default [
         name: 'yuanchuang',
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
-          title: '原创'
+          title: '原创',
+          sourceType: '原创'
         }
       },
       {
@@ -50,7 +55,8 @@ export default [
         name: 'shoufa',
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
-          title: '首发'
+          title: '首发',
+          sourceType: '原创'
         }
       },
       {
@@ -58,7 +64,8 @@ export default [
         name: 'wechat',
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
-          title: '微信公众号'
+          title: '微信公众号',
+          sourceType: '热点'
         }
       },
       {
@@ -66,7 +73,8 @@ export default [
         name: 'other',
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
-          title: '其他'
+          title: '其他',
+          sourceType: ''
         }
       },
       {
