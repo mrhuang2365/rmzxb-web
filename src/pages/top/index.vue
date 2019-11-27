@@ -148,6 +148,16 @@ export default {
       })
     },
     initType(){
+      this.formInline = {
+        title: '',
+        type: '热点', // 热点
+        column: '', // 专栏
+        startDate: '',
+        endDate: '',
+        senatorName: '',
+        site: '',
+        author: '',
+      }
       this.formInline.type = this.$route.meta.sourceType
     },
     onSiteSearch(item){
