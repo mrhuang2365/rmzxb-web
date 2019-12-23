@@ -94,6 +94,14 @@ export default [
         }
       },
       {
+        path: '/graph',
+        name: 'graph',
+        component: (r) => require.ensure([], () => r(require('@/pages/Graph/index.vue'))),
+        meta: {
+          title: '关系图'
+        }
+      },
+      {
         path: '/NotFound',
         name: 'NotFound',
         component: (r) => require.ensure([], () => r(require('@/pages/NotFound/index.js'))),
