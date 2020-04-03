@@ -56,7 +56,7 @@ export default [
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
           title: '首发',
-          sourceType: '原创'
+          sourceType: '首发'
         }
       },
       {
@@ -65,7 +65,7 @@ export default [
         component: (r) => require.ensure([], () => r(require('@/pages/top/index.vue'))),
         meta: {
           title: '微信公众号',
-          sourceType: '热点'
+          sourceType: '微信公众号'
         }
       },
       {

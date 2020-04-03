@@ -55,8 +55,8 @@
     </div>
     <!-- 公众号 -->
     <div v-if="tabName == '1'">
-      <el-table class="table" id="my-data-table" stripe 
-        v-loading="loading" header-row-class-name="table-header" :data="data" 
+      <el-table class="table" id="my-data-table" stripe
+        v-loading="loading" header-row-class-name="table-header" :data="data"
         style="width: 100%">
           <el-table-column label="排名" type="index" width="80"></el-table-column>
           <el-table-column label="公众号" prop="wechatNickName">
@@ -66,7 +66,7 @@
           </el-table-column>
           <el-table-column label="发布次数/篇数">
            <template slot-scope="scope" >
-              <div>{{scope.row.newsCount}}</div>
+              <div>{{scope.row.release_news_Count}}</div>
             </template>
           </el-table-column>
           <el-table-column label="阅读次数" prop="newsReadCount"> </el-table-column>
@@ -94,7 +94,7 @@
 import {exportExcel, getWorkSheet, exportExcelFromArrary} from '@/util/util'
 
 export default {
-  data(){
+  data () {
     return{
       tabs:[
         {
@@ -138,31 +138,31 @@ export default {
       data:[],
     }
   },
-  methods:{
-    onTabClick(item, index){
+  methods: {
+    onTabClick (item, index) {
       this.tabName = item.value;
       this.initData()
     },
-    onTabTimeslick(item, index){
+    onTabTimeslick (item, index) {
       this.from.dateType = item.value;
       this.initData();
     },
-    tableRowClassName({row, rowIndex}){
+    tableRowClassName ({row, rowIndex}) {
       if (rowIndex % 2 !== 1) {
         return 'warning-row';
       }
       return ''
     },
-    handleSizeChange(value) {
+    handleSizeChange (value) {
       this.pageConfig.size = value;
       this.pageConfig.page = 1;
       this.initData()
     },
-    handleCurrentChange(value) {
+    handleCurrentChange (value) {
       this.pageConfig.page = value
       this.initData()
     },
-    async initData(){
+    async initData () {
       try {
         this.loading = true;
         const data = {
@@ -176,7 +176,8 @@ export default {
         // }
         const res = await this.$http.post('/api/page/news/getWechatStatistics.json', data);
         this.data = res.data.map((item) => {
-          item.publishTime = this.$moment(item.createDate).format('YYYY-MM-DD HH:mm');
+          item.publishTime = this.$moment(item.createDate).format('YYYY-MM-DD HH:mm')
+          item.release_news_Count = item.releaseCount + '/' + item.newsCount
           return item
         })
         // this.pageConfig.total = res.count;
@@ -185,7 +186,7 @@ export default {
       }
       this.loading = false;
     },
-    onArticleExport(fileName){
+    onArticleExport (fileName) {
       const keys = [
         {
           key: 'index',
@@ -233,46 +234,46 @@ export default {
       })
       exportExcelFromArrary(contentArr, fileName)
     },
-    onWechatExport(fileName){
+    onWechatExport (fileName) {
       const keys = [
         {
           key: 'index',
           display: '排名',
-        },{
+        }, {
           key: 'wechatNickName',
           display: '公众号',
-        },{
-          key: 'newsCount',
+        }, {
+          key: 'release_news_Count',
           display: '发布次数/篇数',
-        },{
+        }, {
           key: 'newsReadCount',
           display: '阅读次数',
-        },{
+        }, {
           key: 'averageReadCount',
           display: '平均阅读',
-        },{
+        }, {
           key: 'newsLikeCount',
           display: '在看数',
         }
-      ];
-      const headerArr = [];
-      const contentArr= [];
+      ]
+      const headerArr = []
+      const contentArr = []
       keys.forEach((i) => {
         headerArr.push(i.display)
       })
-      contentArr[0] = headerArr;
-      this.data.forEach((item, index)=>{
-        const arr = [];
+      contentArr[0] = headerArr
+      this.data.forEach((item, index) => {
+        const arr = []
         keys.forEach((i) => {
           const value = i.key === 'index' ? index + 1 : item[i.key]
           arr.push(value)
         });
-        contentArr.push(arr);
+        contentArr.push(arr)
       })
       exportExcelFromArrary(contentArr, fileName)
     },
-    exportExcel(){
-      const fileName = this.tabName == '0' ? '文章排行' : '公众号排行';
+    exportExcel () {
+      const fileName = this.tabName == '0' ? '文章排行' : '公众号排行'
       if (this.tabName == '0') {
         this.onArticleExport(fileName)
       } else {
@@ -284,11 +285,11 @@ export default {
       //     ws: getWorkSheet("my-data-table")
       // }], fileName)
     },
-    goOut(item){
-      window.open(item.newsUrl);
+    goOut (item) {
+      window.open(item.newsUrl)
     }
   },
-  created(){
+  created () {
     this.initData()
   }
 }

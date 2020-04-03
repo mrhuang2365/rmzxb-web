@@ -6,11 +6,12 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import router from '../../router'
 import { getToken, removeUserInfo } from '../../util/auth'
+import {Base64} from '../../util/util'
 
 console.log('process.env:', process.env)
-let baseURL = process.env.BASE_API
-if (location.hostname === '172.20.254.225') {
-  baseURL = process.env.LOCAL_API
+let baseURL = Base64.decode(process.env.BASE_API)
+if (location.hostname === Base64.decode('aHR0cDovLzE3Mi4yMC4yNTQuMjI1')) {
+  baseURL = Base64.decode(process.env.LOCAL_API)
 }
 
 // 创建一个 axios 实例

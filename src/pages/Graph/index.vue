@@ -31,7 +31,9 @@ export default {
       // const data = params.data
     },
     initEcharts () {
-      this.echarts1.setOption(getGraphOptions(this.modeRadio))
+      const options = getGraphOptions(this.modeRadio)
+      console.log('options', options)
+      this.echarts1.setOption(options)
     },
     resize () {
       this.echarts1.resize()

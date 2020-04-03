@@ -1,6 +1,6 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  BASE_API: '"http://106.38.28.109:12218"',
-  LOCAL_API: '"http://172.20.254.225:12218"'
+  BASE_API: '"aHR0cDovLzEwNi4zOC4yOC4xMDk6MTIyMTg="',
+  LOCAL_API: '"aHR0cDovLzE3Mi4yMC4yNTQuMjI1OjEyMjE4"'
 }

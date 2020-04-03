@@ -18,6 +18,23 @@
         <el-date-picker v-model="formInline.endDate" style="width: 180px"  placeholder="请选择结束时间">
         </el-date-picker>
       </el-form-item>
+      <el-form-item label="结束时间">
+        <el-date-picker v-model="formInline.endDate" style="width: 180px"  placeholder="请选择结束时间">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="频道搜索" v-if="siteSearchShow">
+        <el-input v-model="formInline.site" style="width: 180px" placeholder="请输入委员姓名"></el-input>
+      </el-form-item>
+      <el-form-item label="类型" v-if="sourcetypeShow">
+        <el-select v-model="formInline.sourceType" placeholder="请选择">
+          <el-option
+            v-for="item in sourcetypeList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSearch()" style="width:120px;">搜索</el-button>
       </el-form-item>
@@ -84,8 +101,47 @@ export default {
         senatorName: '',
         site: '',
         author: '',
+        sourceType: ''
       },
-      
+      sourcetypeList:[
+        {
+          id: '',
+          name: '全部',
+        },{
+          id: '01',
+          name: '新闻',
+        },{
+          id: '02',
+          name: '论坛',
+        },{
+          id: '03',
+          name: '博客',
+        },{
+          id: '04',
+          name: '微博',
+        },{
+          id: '05',
+          name: '平媒',
+        },{
+          id: '06',
+          name: '微信',
+        },{
+          id: '07',
+          name: '视频',
+        },{
+          id: '08',
+          name: '长微博',
+        },{
+          id: '09',
+          name: 'APP',
+        },{
+          id: '10',
+          name: '评论',
+        },{
+          id: '99',
+          name: '其他',
+        }
+      ],
       loading: false,
       data:[],
       pageConfig:{
@@ -101,11 +157,21 @@ export default {
       this.initData();
     }
   },
+  computed:{
+    sourcetypeShow(){
+      return ['shoufa', 'wechat', 'other'].indexOf(this.$route.name) !== -1
+    },
+    siteSearchShow(){
+      return this.$route.name === 'yuanchuang'
+    }
+  },
   methods:{
     onSearch(){
-      this.formInline.site = '';
       this.formInline.author = '';
       this.pageConfig.page = 1;
+      if (!this.siteSearchShow) {
+        this.formInline.site = '';
+      }
       this.initData();
     },
     async initData(){
@@ -157,6 +223,7 @@ export default {
         senatorName: '',
         site: '',
         author: '',
+        sourceType: ''
       }
       this.formInline.type = this.$route.meta.sourceType
     },

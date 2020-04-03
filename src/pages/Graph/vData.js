@@ -184,6 +184,8 @@ function getOptions1 () {
 function getOptions2 () {
   var nodes = initNodes1()
   var links = initLinks1()
+  console.log(JSON.stringify(nodes))
+  console.log(JSON.stringify(links))
   return setOptions(nodes, links)
 }
 export function getGraphOptions (type) {
