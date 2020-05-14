@@ -6,14 +6,10 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import router from '../../router'
 import { getToken, removeUserInfo } from '../../util/auth'
-import {Base64} from '../../util/util'
+// import {Base64} from '../../util/util'
 
-console.log('process.env:', process.env)
-let baseURL = Base64.decode(process.env.BASE_API)
-if (location.hostname === Base64.decode('aHR0cDovLzE3Mi4yMC4yNTQuMjI1')) {
-  baseURL = Base64.decode(process.env.LOCAL_API)
-}
-
+const __PROT = 12218
+let baseURL = location.protocol + '//' + location.hostname + ':' + __PROT
 // 创建一个 axios 实例
 const service = axios.create({
   baseURL: baseURL,
